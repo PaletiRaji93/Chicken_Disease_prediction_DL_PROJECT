@@ -2,6 +2,7 @@ tensorflow
 pandas 
 dvc
 notebook
+ipykernel
 numpy
 matplotlib
 seaborn

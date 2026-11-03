@@ -218,3 +218,14 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+# Dataset ZIP files
+data/*.zip
+
+# Extracted dataset
+artifacts/data_ingestion/
+
+# Python environment and cache
+__pycache__/
+*.pyc
+.dlenv
+artifacts/*

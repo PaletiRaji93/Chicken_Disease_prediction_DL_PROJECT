@@ -18,19 +18,14 @@
 # How to run?
 ### STEPS:
 
-Clone the repository
-
-```bash
-https://github.com/entbappy/Chicken-Disease-Classification--Project
-```
 ### STEP 01- Create a conda environment after opening the repository
 
 ```bash
-conda create -n cnncls python=3.8 -y
+python -m venv env
 ```
 
 ```bash
-conda activate cnncls
+env\Scripts\activate
 ```
 
 

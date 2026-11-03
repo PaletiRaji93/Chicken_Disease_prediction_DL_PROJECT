@@ -5,7 +5,7 @@ from pathlib import Path
 @dataclass(frozen=True)
 class DataIngestionConfig:
     root_dir: Path
-    source_URL: str
+    source_URL: str | None
     local_data_file: Path
     unzip_dir: Path
 
@@ -41,6 +41,7 @@ class TrainingConfig:
     params_batch_size: int
     params_is_augmentation: bool
     params_image_size: list
+    params_learning_rate: float
 
 
 

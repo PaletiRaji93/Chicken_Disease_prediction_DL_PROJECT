@@ -6,16 +6,17 @@ from pathlib import Path
 class Training:
     def __init__(self, config: TrainingConfig):
         self.config = config
-    
+
     def get_base_model(self):
         self.model = tf.keras.models.load_model(
-            self.config.updated_base_model_path
+            self.config.updated_base_model_path,
+            compile=False
         )
-    
+
     def train_valid_generator(self):
 
         datagenerator_kwargs = dict(
-            rescale = 1./255,
+            rescale=1.0 / 255,
             validation_split=0.20
         )
 
@@ -60,10 +61,32 @@ class Training:
     def save_model(path: Path, model: tf.keras.Model):
         model.save(path)
 
-
     def train(self, callback_list: list):
-        self.steps_per_epoch = self.train_generator.samples // self.train_generator.batch_size
-        self.validation_steps = self.valid_generator.samples // self.valid_generator.batch_size
+
+        self.steps_per_epoch = (
+            self.train_generator.samples //
+            self.train_generator.batch_size
+        )
+
+        self.validation_steps = (
+            self.valid_generator.samples //
+            self.valid_generator.batch_size
+        )
+
+        # Create a completely fresh optimizer
+        optimizer = tf.keras.optimizers.Adam(
+            learning_rate=self.config.params_learning_rate
+        )
+
+        # Compile the model only in the training stage
+        self.model.compile(
+            optimizer=optimizer,
+            loss="categorical_crossentropy",
+            metrics=["accuracy"]
+        )
+
+        print("\nModel compilation successful!")
+        print("\nStarting model training...\n")
 
         self.model.fit(
             self.train_generator,
@@ -79,3 +102,4 @@ class Training:
             model=self.model
         )
 
+        print("\nModel training completed successfully!")
